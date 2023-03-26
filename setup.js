@@ -3,7 +3,7 @@ const { Routes } = require('discord-api-types/v10');
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
-rest.put(Routes.applicationCommand(process.env.APPLICATION_ID), {
+rest.put(Routes.applicationCommands(process.env.APPLICATION_ID), {
     body: {
         name: "quack",
         type: 1,

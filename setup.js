@@ -4,9 +4,9 @@ const { Routes } = require('discord-api-types/v10');
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 rest.put(Routes.applicationCommands(process.env.APPLICATION_ID), {
-    body: {
+    body: [{
         name: "quack",
         type: 1,
         description: "get a duck :)"
-    }
+    }]
 })

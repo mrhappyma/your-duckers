@@ -1,0 +1,8 @@
+{
+  "name": "your-duckers",
+  "version": "1.0.0",
+  "dependencies": {
+    "discord-interactions": "^3.3.0",
+    "raw-body": "^2.4.1"
+  }
+}

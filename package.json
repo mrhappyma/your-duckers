@@ -4,5 +4,9 @@
   "dependencies": {
     "discord-interactions": "^3.3.0",
     "raw-body": "^2.4.1"
+  },
+  "devDependencies": {
+    "@discordjs/rest": "^1.6.0",
+    "discord-api-types": "^0.37.37"
   }
 }

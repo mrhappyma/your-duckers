@@ -1,14 +1,6 @@
 import { InteractionResponseType, InteractionType, verifyKey } from "discord-interactions";
 import getRawBody from "raw-body";
 
-
-const DUCK_COMMAND = {
-    name: "quack",
-    description: "Get a duck!",
-};
-
-const INVITE_URL = `https://discord.com/oauth2/authorize?client_id=${process.env.APPLICATION_ID}&scope=applications.commands`;
-
 /**
  * @param {VercelRequest} request
  * @param {VercelResponse} response
@@ -44,7 +36,7 @@ export default async (request, response) => {
         } else if (message.type === InteractionType.APPLICATION_COMMAND) {
             // Handle our Slash Commands
             switch (message.data.name.toLowerCase()) {
-                case DUCK_COMMAND.name.toLowerCase():
+                case "quack":
                     response.status(200).send({
                         type: 4,
                         data: {

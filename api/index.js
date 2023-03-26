@@ -37,10 +37,19 @@ export default async (request, response) => {
             // Handle our Slash Commands
             switch (message.data.name.toLowerCase()) {
                 case "quack":
+                    const duck = await fetch('https://random-d.uk/api/v2/random')
                     response.status(200).send({
                         type: 4,
                         data: {
                             content: "Hello!",
+                            embeds: [
+                                {
+                                    image: {
+                                        url: duck.body.url
+                                    },
+                                    color: 16766977
+                                }
+                            ]
                         },
                     });
                     break;

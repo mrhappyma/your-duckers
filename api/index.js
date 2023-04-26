@@ -6,7 +6,7 @@ import {
 import getRawBody from "raw-body";
 import { PostHog } from "posthog-node";
 
-const hog = new PostHog('phc_m7aexycOjWFEvbQSRbTDTTYvJp5zEyjCPmCyedoWAG5', {
+const hog = new PostHog(process.env.POSTHOG, {
     host: "https://app.posthog.com",
 });
 
@@ -68,7 +68,28 @@ export default async (request, response) => {
                             ],
                         },
                     });
-
+                    break;
+                case "dotd":
+                    const enabled = await hog.isFeatureEnabled(
+                        "duck_schedule",
+                        message.user?.id ?? message.member?.user?.id ?? "0"
+                    );
+                    if (!enabled) {
+                        response.status(200).send({
+                            type: 4,
+                            data: {
+                                flags: 64,
+                                content: "You do not have access to this feature.",
+                            },
+                        });
+                    } else {
+                        response.status(200).send({
+                            type: 4,
+                            data: {
+                                content: "Super secret DOTD thing woah :shocked:",
+                            },
+                        });
+                    }
                     break;
                 default:
                     console.error("Unknown Command");

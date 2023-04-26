@@ -1,5 +1,14 @@
-import { InteractionResponseType, InteractionType, verifyKey } from "discord-interactions";
+import {
+    InteractionResponseType,
+    InteractionType,
+    verifyKey,
+} from "discord-interactions";
 import getRawBody from "raw-body";
+import { PostHog } from "posthog-node";
+
+const hog = new PostHog('phc_m7aexycOjWFEvbQSRbTDTTYvJp5zEyjCPmCyedoWAG5', {
+    host: "https://app.posthog.com",
+});
 
 /**
  * @param {VercelRequest} request
@@ -37,23 +46,29 @@ export default async (request, response) => {
             // Handle our Slash Commands
             switch (message.data.name.toLowerCase()) {
                 case "quack":
-                    let duckData = {}
-                    const duck = await fetch('https://random-d.uk/api/v2/random')
+                    console.log(message);
+                    hog.capture({
+                        distinctId: message.user?.id ?? message.member?.user?.id ?? "0",
+                        event: "duck-sent",
+                    });
+                    let duckData = {};
+                    await fetch("https://random-d.uk/api/v2/random")
                         .then((response) => response.json())
-                        .then((data) => duckData = data);
+                        .then((data) => (duckData = data));
                     response.status(200).send({
                         type: 4,
                         data: {
                             embeds: [
                                 {
                                     image: {
-                                        url: duckData.url
+                                        url: duckData.url,
                                     },
-                                    color: 16766977
-                                }
-                            ]
+                                    color: 16766977,
+                                },
+                            ],
                         },
                     });
+
                     break;
                 default:
                     console.error("Unknown Command");

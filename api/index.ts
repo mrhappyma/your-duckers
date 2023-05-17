@@ -1,8 +1,4 @@
-import {
-  InteractionResponseType,
-  InteractionType,
-  verifyKey,
-} from "discord-interactions";
+import { InteractionResponseType, verifyKey } from "discord-interactions";
 import getRawBody from "raw-body";
 import environmentVariables from "../utils/env";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
@@ -11,11 +7,14 @@ import quackCommand from "../commands/quack";
 import dotdCommand from "../commands/dotd";
 import infoCommand from "../commands/info";
 import { PostHog } from "posthog-node";
+import { APIInteraction, InteractionType } from "discord-api-types/v10";
+import { PrismaClient } from "@prisma/client";
 
 export const env = environmentVariables.parse(process.env);
 export const hog = new PostHog(env.POSTHOG, {
   host: "https://app.posthog.com",
 });
+export const prisma = new PrismaClient();
 
 export default async (request: VercelRequest, response: VercelResponse) => {
   if (request.method === "POST") {
@@ -39,15 +38,15 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     }
 
     // Handle the request
-    const message = request.body;
+    const message = request.body as APIInteraction;
 
     // Handle PINGs from Discord
-    if (message.type === InteractionType.PING) {
+    if (message.type === InteractionType.Ping) {
       console.log("Handling Ping request");
       response.send({
         type: InteractionResponseType.PONG,
       });
-    } else if (message.type === InteractionType.APPLICATION_COMMAND) {
+    } else if (message.type === InteractionType.ApplicationCommand) {
       // Handle our Slash Commands
       switch (message.data.name.toLowerCase()) {
         case "quack":

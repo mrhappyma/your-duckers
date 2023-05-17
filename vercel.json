@@ -1,1 +1,5 @@
-{}
+{
+  "buildCommand": "npx tsc; npx prisma generate",
+  "installCommand": "pnpm install",
+  "outputDirectory": "dist"
+}

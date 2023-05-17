@@ -3,9 +3,10 @@
   "display": "Node 18",
 
   "compilerOptions": {
+    "outDir": "dist",
     "lib": ["es2022", "DOM"],
     "module": "commonjs",
-    "target": "es2022",
+    "target": "ES2022",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

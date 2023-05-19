@@ -25,7 +25,7 @@ const dotdCommand = async (message: any, response: VercelResponse) => {
         mentionRoleId: role?.value,
       },
     });
-    const url = `https://discord.com/api/oauth2/authorize?client_id=${env.APPLICATION_ID}&redirect_uri=https%3A%2F%2F${env.VERCEL_URL}%2Fapi%2Fdotd-webhook-callback&response_type=code&scope=webhook.incoming&guild_id=${body.guild_id}&disable_guild_select=true&state=${databaseEntry.linkingKey}`;
+    const url = `https://discord.com/api/oauth2/authorize?client_id=${env.APPLICATION_ID}&redirect_uri=https%3A%2F%2F${env.SELF_URL}%2Fapi%2Fdotd-webhook-callback&response_type=code&scope=webhook.incoming&guild_id=${body.guild_id}&disable_guild_select=true&state=${databaseEntry.linkingKey}`;
     response.status(200).send({
       type: 4,
       data: {

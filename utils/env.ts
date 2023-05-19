@@ -6,7 +6,7 @@ const environmentVariables = z.object({
   APPLICATION_ID: z.string(),
   POSTHOG: z.string(),
   DATABASE_URL: z.string(),
-  VERCEL_URL: z.string(),
+  SELF_URL: z.string(),
   SECRET: z.string(),
 });
 

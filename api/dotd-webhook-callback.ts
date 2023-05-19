@@ -14,7 +14,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
       grant_type: "authorization_code",
       code: request.query.code as string,
       scope: "webhook.incoming",
-      redirect_uri: `https://${env.VERCEL_URL}/api/dotd-webhook-callback`,
+      redirect_uri: `https://${env.SELF_URL}/api/dotd-webhook-callback`,
     }),
   });
   const webhook: RESTPostOAuth2AccessTokenWithBotAndWebhookIncomingScopeResult =

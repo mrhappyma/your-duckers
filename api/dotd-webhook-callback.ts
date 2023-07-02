@@ -3,6 +3,19 @@ import { env, prisma } from ".";
 import { RESTPostOAuth2AccessTokenWithBotAndWebhookIncomingScopeResult } from "discord-api-types/v10";
 
 export default async (request: VercelRequest, response: VercelResponse) => {
+  const exists = await prisma.dotdWebhook.findUnique({
+    where: {
+      linkingKey: request.query.state as string,
+    },
+  });
+  if (!exists) {
+    response.status(400).send("Invalid state");
+    return;
+  }
+  if (exists.channelId) {
+    response.status(400).send("Webhook already configured");
+    return;
+  }
   const webhookRequest = await fetch("https://discord.com/api/oauth2/token", {
     method: "POST",
     headers: {

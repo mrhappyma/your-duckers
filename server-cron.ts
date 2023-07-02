@@ -24,7 +24,9 @@ new CronJob(
             },
             body: JSON.stringify({
               content: webhook.mentionRoleId
-                ? `<@&${webhook.mentionRoleId}>`
+                ? webhook.mentionRoleId == webhook.guildId
+                  ? "@everyone"
+                  : `<@&${webhook.mentionRoleId}>`
                 : undefined,
               embeds: [
                 {

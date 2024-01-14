@@ -32,10 +32,10 @@ export default async (request: VercelRequest, response: VercelResponse) => {
       env.PUBLIC_KEY
     );
 
-    if (!isValidRequest) {
-      console.error("Invalid Request");
-      return response.status(401).send({ error: "Bad request signature " });
-    }
+    //if (!isValidRequest) {
+     // console.error("Invalid Request");
+     // return response.status(401).send({ error: "Bad request signature " });
+    //}
 
     // Handle the request
     const message = request.body as APIInteraction;

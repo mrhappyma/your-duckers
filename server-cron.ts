@@ -13,6 +13,12 @@ new CronJob(
     const duckJson: { url: string; message: string } = await duck.json();
     const allWebhooks = await prisma.dotdWebhook.findMany();
 
+    await prisma.dotd.create({
+      data: {
+        url: duckJson.url,
+      },
+    });
+
     for (const webhook of allWebhooks) {
       if (webhook.discordId && webhook.discordToken && webhook.channelId) {
         const webhookRequest = await fetch(
